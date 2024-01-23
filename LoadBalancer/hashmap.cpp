@@ -19,7 +19,8 @@ unsigned int hash(char* name) {
 }
 
 void print_table() {
-	printf("====START===\n");
+
+	printf("==========HASHTABLE========\n");
 	for (int i = 0; i < MAX_ELEM; i++) {
 		if (hash_table_clt[i] == NULL) {
 			printf("\t%d\t----\n", i);
@@ -34,7 +35,7 @@ void print_table() {
 			printf("\n");
 		}
 	}
-	printf("====END====\n");
+	printf("===========================\n");
 }
 
 bool init_hash_table() {

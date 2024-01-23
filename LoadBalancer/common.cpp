@@ -45,11 +45,11 @@ void create_new_worker_process() {
     new_worker->startup_info.wShowWindow = SW_SHOW;
 
     memset(&new_worker->process_info, 0, sizeof(PROCESS_INFORMATION));
-    TCHAR buff[100];
-    GetCurrentDirectory(100, buff);
+    //TCHAR buff[100];
+    //GetCurrentDirectory(100, buff);
     //wcscat(buff, L"\\..\\Debug\\Worker.exe");
-    wcscat_s(buff, L"\\..\\Client\\x64\\Debug\\Worker.exe");
-    //wchar_t buff[] = L"C:\\Users\\bugar\\OneDrive\\Desktop\\4 GODINA\\IKP\\IKP_DA_PROJ\\Client\\x64\\Debug\\Worker.exe";
+    //wcscat_s(buff, L"\\..\\Client\\x64\\Debug\\Worker.exe");
+    wchar_t buff[] = L"C:\\Users\\bugar\\OneDrive\\Desktop\\IKPPROJEKAT\\Projekat_IKP\\Client\\x64\\Debug\\Worker.exe";
     TCHAR cmd[] = L"Worker.exe";
     if (!CreateProcess(
         buff,          // LPCTSTR lpApplicationName

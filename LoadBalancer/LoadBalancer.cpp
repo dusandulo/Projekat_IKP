@@ -6,6 +6,7 @@
 #include "worker_communication.h"
 #include "list.h"
 #include "workers.h"
+#include "test.h"
 
 #define WORKER_IP_ADDRESS "127.0.0.1"
 #define WORKER_PORT 6069
@@ -48,6 +49,10 @@ int main() {
     hDispatcher = CreateThread(NULL, 0, &dispatcher, (LPVOID)0, 0, &dispatcherID);
 
     create_new_worker_process();
+    //test_list();
+    //test_hashtable();
+    //test_dynamic_enqueue_dequeue();
+
 
     printf("Press any key to exit:\n");
     char input[2];
