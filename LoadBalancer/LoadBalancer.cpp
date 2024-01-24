@@ -144,8 +144,8 @@ DWORD WINAPI dispatcher(LPVOID param) {
 
 int main() {
 
-    getchar();
-    getchar();
+    //getchar();
+    //getchar();
 
     DWORD listenerClientID;
     DWORD percentageID;
@@ -178,8 +178,8 @@ int main() {
     //close the process and worker write and read thread
     //if(free_workers_list->head != NULL)
 
-    print_list(free_workers_list);
-    print_list(busy_workers_list);
+   /* print_list(free_workers_list);
+    print_list(busy_workers_list);*/
     //deleteFreeWorker();
  
 
@@ -203,7 +203,7 @@ int main() {
     delete_list(free_workers_list);
     printf("Izbrisan free workers\n");
     delete_list(busy_workers_list);
-    printf("Izbrisan free workers\n");
+    printf("Izbrisan busy workers\n");
     delete_queue();
     printf("Izbrisan queue\n");
     delete_worker_list_and_shutdown();

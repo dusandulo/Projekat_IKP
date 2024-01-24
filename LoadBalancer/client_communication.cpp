@@ -60,6 +60,11 @@ DWORD WINAPI client_read_write(LPVOID param) {
                 if (strcmp(dataBuffer, "exit") == 0) {
                     // Connection was closed successfully
                     printf("Connection with client %d closed.\n", client_num);
+                    messageStruct* newMessageStruct = (messageStruct*)malloc(sizeof(messageStruct));
+                    strcpy(newMessageStruct->clientName, clientName);
+                    strcpy(newMessageStruct->bufferNoName, dataBuffer);
+
+                    enqueue(newMessageStruct);
                     break;
                 }
 
@@ -178,7 +183,7 @@ DWORD WINAPI client_listener(LPVOID param) {
         return 1;
     }
 
-    printf("CLIENT listener socket is set to listening mode. Waiting for new connection requests.\n");
+    printf("CLIENT listener socket is set to listening mode.\n");
     clientThreadStruct cli;
 
     unsigned long nb_listen = 1;

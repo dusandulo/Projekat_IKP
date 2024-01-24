@@ -218,12 +218,12 @@ DWORD WINAPI dequeue_message(LPVOID param) {
 
 }
 void test_messages() {
-    printf("Pre zauzimanja queue");
-    getchar();
-    getchar();
+    //printf("Pre zauzimanja queue");
+    //getchar();
+    //getchar();
 
 
-    create_queue(10);
+    //create_queue(10);
 
 
     printf("Nakon zauzimanja queue");

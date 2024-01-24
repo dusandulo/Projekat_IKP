@@ -144,7 +144,7 @@ int main()
     hClientListener = CreateThread(NULL, 0, &client_read, (LPVOID)connectSocket, 0, &clientID);
     int msgCnt = 0;
 
-    while (msgCnt <= 2000) {
+    while (msgCnt <= 1000) {
         // Sleep for 2 seconds
         Sleep(1000);
 
@@ -174,7 +174,7 @@ int main()
         printf("Message successfully sent. Total bytes: %ld\n", iResult);
     }
 
-    Sleep(20000);
+    Sleep(3000);
 
     sprintf(dataBuffer, "exit");
 

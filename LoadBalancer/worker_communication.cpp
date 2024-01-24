@@ -132,6 +132,7 @@ DWORD WINAPI worker_read(LPVOID param) {
 
             dataBuffer[iResult] = '\0';
 
+            //printf("OVAJ ISPIS ==> %s \n", dataBuffer + 1);
             if (strstr(dataBuffer + 1, ":exit") != NULL) {
                 printf("[WORKER READ] Worker sent exit. Worker proccess signing off.\n");
 
@@ -146,7 +147,7 @@ DWORD WINAPI worker_read(LPVOID param) {
             char clientName[CLIENT_NAME_LEN];
             memset(clientName, 0, CLIENT_NAME_LEN);
             strcpy(clientName, strstr(dataBuffer, "Client"));
-            int a;
+            //printf("%s", dataBuffer);
             sscanf(dataBuffer + 1, "Client->%[^:]:", clientName);
 
 
@@ -154,7 +155,8 @@ DWORD WINAPI worker_read(LPVOID param) {
             char temp[] = "";
             
             //if(strcmp(dataBuffer, "exit") == 0)
-            strcpy(bufferForClient, dataBuffer + 17);
+            strncpy(bufferForClient, dataBuffer + 17, sizeof(bufferForClient) - 1);
+            bufferForClient[sizeof(bufferForClient) - 1] = '\0';  // Ensure null termination
 
             client_thread* foundClient = lookup_client(clientName);
             if (foundClient) {
@@ -203,7 +205,7 @@ DWORD WINAPI worker_read(LPVOID param) {
                 continue;
             }
             else {
-                printf("[WORKER READ]: recv failed with error: %d\n", WSAGetLastError());
+                //printf("[WORKER READ]: recv failed with error: %d\n", WSAGetLastError());
                 break;
             }
 
@@ -216,7 +218,7 @@ DWORD WINAPI worker_read(LPVOID param) {
     //// Check if connection is succesfully shut down.
     if (iResult == SOCKET_ERROR)
     {
-        printf("shutdown failed with error: %d\n", WSAGetLastError());
+        printf("shutdown: %d\n", WSAGetLastError());
         closesocket(acceptedSocket);
         WSACleanup();
         return 1;
@@ -367,7 +369,7 @@ DWORD WINAPI worker_listener(LPVOID param) {
 
 
     //Close listen and accepted sockets
-    closesocket(acceptedSocket);
+    //closesocket(acceptedSocket);
     closesocket(listenSocket);
 
     // Deinitialize WSA library

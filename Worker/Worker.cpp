@@ -128,10 +128,32 @@ int main()
 
             }
 
+           
+
             dataBuffer[iResult] = '\0';
 
-            // Log message text
             printf("[WORKER] recieved : %s.\n", dataBuffer + 1);// move to the actual message
+
+            if (strstr(dataBuffer, ":exit") != NULL) {
+
+                /*char clientId[] = "";
+                sprintf(clientId, "Client%d:", atoi(dataBuffer + 7));*/
+                strcpy(dataBuffer2 + 1, successStr);
+ 
+                strcpy(dataBuffer2 + 1 + strlen(dataBuffer2 + 1), dataBuffer + 1);
+
+                char messageLen = strlen(dataBuffer2 + 1) + 1;
+                memset(dataBuffer2, messageLen, 1); //put the message size on the first byte 9+message_len
+
+                printf("Sending to server: %s\n", dataBuffer2 + 1);
+
+                iResult = send(connectSocket, dataBuffer2, (int)strlen(dataBuffer2), 0);
+                break;
+            }
+
+
+            // Log message text
+          
             // Send message to server using connected socket
 
             memset(dataBuffer2, 0, RET_BUFFER_SIZE);
@@ -170,6 +192,9 @@ int main()
             strcpy(dataBuffer2 + 1 + strlen(dataBuffer2 + 1), temp);
             char messageLen = strlen(dataBuffer2 + 1) + 1;
             memset(dataBuffer2, messageLen, 1); //put the message size on the first byte 9+message_len
+
+
+          
 
             //printf("\n%d", dataBuffer2[0]);
             //printf("\n%d", strlen(dataBuffer2));
@@ -210,7 +235,7 @@ int main()
                 continue;
             }
             else {
-                printf("[WORKER]: recv failed with error: %d\n", WSAGetLastError());
+                //printf("[WORKER]: recv failed with error: %d\n", WSAGetLastError());
                 break;
             }
 
