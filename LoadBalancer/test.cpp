@@ -123,28 +123,72 @@ void test_list() {
     print_list(listZauzeti);
 
     printf("Oslobodjena mem");
+    delete_list(listSlobodni);
+    delete_list(listZauzeti);
 }
 
 void test_hashtable() {
-    client_thread cl1, cl2, cl3, cl4, cl5, cl6;
-    strcpy(cl1.clientName, "Client1");
-    strcpy(cl2.clientName, "Client2");
-    strcpy(cl3.clientName, "Client3");
-    strcpy(cl4.clientName, "Client4");
-    strcpy(cl5.clientName, "Client5");
-    strcpy(cl6.clientName, "Client6");
+
+    DWORD h1,h2,h3,h4,h5,h6;
+
+
+
+    client_thread* test1 = (client_thread*)malloc(sizeof(client_thread));
+    HANDLE t1 = CreateThread(NULL, 0, &test, (LPVOID)test1, 0, &h1);
+    test1->acceptedSocket = NULL;
+    test1->clientThread = t1;
+    test1->finished = true;
+    strcpy(test1->clientName, "Client1");
+    
+    client_thread* test2 = (client_thread*)malloc(sizeof(client_thread));
+    HANDLE t2 = CreateThread(NULL, 0, &test, (LPVOID)test2, 0, &h2);
+    test1->acceptedSocket = NULL;
+    test1->clientThread = t2;
+    test1->finished = true;
+    strcpy(test2->clientName, "Client2");
+    
+    client_thread* test3 = (client_thread*)malloc(sizeof(client_thread));
+    HANDLE t3 = CreateThread(NULL, 0, &test, (LPVOID)test3, 0, &h3);
+    test1->acceptedSocket = NULL;
+    test1->clientThread = t3;
+    test1->finished = true;
+    strcpy(test3->clientName, "Client3");
+    
+    client_thread* test4 = (client_thread*)malloc(sizeof(client_thread));
+    HANDLE t4 = CreateThread(NULL, 0, &test, (LPVOID)test4, 0, &h4);
+    test4->acceptedSocket = NULL;
+    test4->clientThread = t4;
+    test4->finished = true;
+    strcpy(test4->clientName, "Client4");
+    
+    client_thread* test5 = (client_thread*)malloc(sizeof(client_thread));
+    HANDLE t5 = CreateThread(NULL, 0, &test, (LPVOID)test5, 0, &h5);
+    test5->acceptedSocket = NULL;
+    test5->clientThread = t5;
+    test5->finished = true;
+    strcpy(test5->clientName, "Client5");
+    
+    client_thread* test6 = (client_thread*)malloc(sizeof(client_thread));
+    HANDLE t6 = CreateThread(NULL, 0, &test, (LPVOID)test6, 0, &h6);
+    test6->acceptedSocket = NULL;
+    test6->clientThread = t6;
+    test6->finished = true;
+    strcpy(test6->clientName, "Client6");
+
+
 
     printf("Pre zauzimanja mem");
     getchar();
+    getchar();
 
-    init_hash_table();
+    //init_hash_table();
 
-    insert_client(&cl1);
-    insert_client(&cl2);
-    insert_client(&cl3);
-    insert_client(&cl4);
-    insert_client(&cl5);
-    insert_client(&cl6);
+    insert_client(test1);
+    insert_client(test2);
+    insert_client(test3);
+    insert_client(test4);
+    insert_client(test5);
+    insert_client(test6);
 
     print_table();
 }

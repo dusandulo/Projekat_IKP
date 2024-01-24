@@ -97,6 +97,15 @@ DWORD WINAPI worker_read(LPVOID param) {
     char dataBuffer[BUFFER_SIZE + 9 + 1];
     int worker_num = worker_count++;
 
+    WSADATA wsaData;
+
+    // Initialize windows sockets library for this process
+   /* if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
+    {
+        printf("WSAStartup failed with error: %d\n", WSAGetLastError());
+        return 1;
+    }*/
+
     //check if we got data from client or EXIT signal
     //OR if we got a message from worker
     do
@@ -358,6 +367,7 @@ DWORD WINAPI worker_listener(LPVOID param) {
 
 
     //Close listen and accepted sockets
+    closesocket(acceptedSocket);
     closesocket(listenSocket);
 
     // Deinitialize WSA library

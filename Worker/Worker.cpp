@@ -219,6 +219,8 @@ int main()
     }
 
     // Shutdown the connection since we're done
+    /*char dbtest[] = "6:exit";
+    iResult = send(connectSocket, dbtest, (int)strlen(dbtest), 0);*/
     iResult = shutdown(connectSocket, SD_BOTH);
 
     // Check if connection is succesfully shut down.

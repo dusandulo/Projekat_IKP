@@ -12,7 +12,7 @@ typedef struct messageStruct {
 
 extern HANDLE semaphoreEnd;
 bool is_socket_ready(SOCKET socket, bool isRead);
-void createWorker();
-void deleteFreeWorker();
-DWORD WINAPI check_percentage(LPVOID param);
-DWORD WINAPI dispatcher(LPVOID param);
+//void createWorker();
+//void deleteFreeWorker();
+//DWORD WINAPI check_percentage(LPVOID param);
+//DWORD WINAPI dispatcher(LPVOID param);
