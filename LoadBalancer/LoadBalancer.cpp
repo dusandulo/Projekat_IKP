@@ -25,11 +25,6 @@ worker_node* worker_process_head = NULL;
 
 
 int main() {
-    int a = 0;
-    HANDLE hListenerClient;
-    HANDLE hListenerWorker;
-    HANDLE hPercentage;
-    HANDLE hDispatcher;
 
     DWORD listenerClientID;
     DWORD percentageID;
@@ -43,15 +38,15 @@ int main() {
     semaphoreEnd = CreateSemaphore(0, 0, 4, NULL);
 
 
-    hPercentage = CreateThread(NULL, 0, &check_percentage, (LPVOID)0, 0, &percentageID);
-    hListenerClient = CreateThread(NULL, 0, &client_listener, (LPVOID)0, 0, &listenerClientID);
-    hListenerWorker = CreateThread(NULL, 0, &worker_listener, (LPVOID)0, 0, &listenerWorkerID);
-    hDispatcher = CreateThread(NULL, 0, &dispatcher, (LPVOID)0, 0, &dispatcherID);
+    HANDLE hPercentage = CreateThread(NULL, 0, &check_percentage, (LPVOID)0, 0, &percentageID);
+    HANDLE hListenerClient = CreateThread(NULL, 0, &client_listener, (LPVOID)0, 0, &listenerClientID);
+    HANDLE hListenerWorker = CreateThread(NULL, 0, &worker_listener, (LPVOID)0, 0, &listenerWorkerID);
+    HANDLE hDispatcher = CreateThread(NULL, 0, &dispatcher, (LPVOID)0, 0, &dispatcherID);
 
-    create_new_worker_process();
+    createWorker();
     //test_list();
     //test_hashtable();
-    //test_dynamic_enqueue_dequeue();
+    //test_messages();
 
 
     printf("Press any key to exit:\n");
@@ -60,7 +55,7 @@ int main() {
 
 
     //close the process and worker write and read thread
-    shut_down_first_free_process();
+    deleteFreeWorker();
     ReleaseSemaphore(semaphoreEnd, 4, NULL);
 
     //wait for listener to finish

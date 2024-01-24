@@ -165,14 +165,12 @@ void print_list(list* l) {
 		WCHAR* thread_name_READ = NULL;
 		WCHAR* thread_name_WRITE = NULL;
 		if (GetThreadDescription(current->thread_read, &thread_name_READ)) {
-			printf("[%ls :", thread_name_READ);
+			printf("[ %ls ] --> ", thread_name_READ);
 		}
 		else {
-			printf("[Unknown Read Thread:");
+			printf("[Unknown Read Thread]");
 		}
 
-		GetThreadDescription(current->thread_write, &thread_name_WRITE);
-		printf(" %ls]->", thread_name_WRITE);
 		current = current->next;
 	}
 	printf("\n");

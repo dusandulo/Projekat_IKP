@@ -131,7 +131,7 @@ int main()
             dataBuffer[iResult] = '\0';
 
             // Log message text
-            printf("[WORKER]: load balancer sent : %s.\n", dataBuffer + 1);// move to the actual message
+            printf("[WORKER] recieved : %s.\n", dataBuffer + 1);// move to the actual message
             // Send message to server using connected socket
 
             memset(dataBuffer2, 0, RET_BUFFER_SIZE);

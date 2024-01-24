@@ -100,11 +100,11 @@ void test_list() {
     print_list(listSlobodni);
     delete_node(freeWorker1, listSlobodni);
 
-    printf("\nLista slobodnih nakon brisanja: ");
+    printf("\nLista slobodnih nakon brisanja jednog: ");
     print_list(listSlobodni);
 
     delete_node(freeWorker2, listSlobodni);
-    printf("\nLista slobodnih nakon brisanja: ");
+    printf("\nLista slobodnih nakon brisanja svih: ");
     print_list(listSlobodni);
 
     printf("\nLista zauzetih: ");
@@ -113,17 +113,18 @@ void test_list() {
     delete_node(busyWorker1, listZauzeti);
     delete_node(busyWorker2, listZauzeti);
 
-    printf("\nLista zauzetih nakon brisanja: ");
+    printf("\nLista zauzetih nakon brisanja svih: ");
     print_list(listZauzeti);
 }
 
 void test_hashtable() {
-    client_thread cl1, cl2, cl3, cl4, cl5;
+    client_thread cl1, cl2, cl3, cl4, cl5, cl6;
     strcpy(cl1.clientName, "Client1");
     strcpy(cl2.clientName, "Client2");
     strcpy(cl3.clientName, "Client3");
     strcpy(cl4.clientName, "Client4");
     strcpy(cl5.clientName, "Client5");
+    strcpy(cl6.clientName, "Client6");
 
 
     init_hash_table();
@@ -133,11 +134,12 @@ void test_hashtable() {
     insert_client(&cl3);
     insert_client(&cl4);
     insert_client(&cl5);
+    insert_client(&cl6);
 
     print_table();
 }
 
-DWORD WINAPI producer(LPVOID param) {
+DWORD WINAPI add_msg_to_queue(LPVOID param) {
     queue* q = (queue*)param;
     char clientName[10] = "Client0";
     char message[246] = "10";
@@ -151,7 +153,7 @@ DWORD WINAPI producer(LPVOID param) {
         Sleep(2000);
     }
 }
-DWORD WINAPI consumer(LPVOID param) {
+DWORD WINAPI dequeue_message(LPVOID param) {
     queue* q = (queue*)param;
     while (true) {
         messageStruct* dequeuedMessageStruct = NULL;
@@ -159,7 +161,7 @@ DWORD WINAPI consumer(LPVOID param) {
         dequeue(&dequeuedMessageStruct);
     }
 }
-void test_dynamic_enqueue_dequeue() {
+void test_messages() {
     create_queue(10);
 
     HANDLE hProducer;
@@ -167,8 +169,8 @@ void test_dynamic_enqueue_dequeue() {
     DWORD ProducerID;
     DWORD ConsumerID;
 
-    hProducer = CreateThread(NULL, 0, &producer, (LPVOID)q, 0, &ProducerID);
-    hConsumer = CreateThread(NULL, 0, &consumer, (LPVOID)q, 0, &ConsumerID);
+    hProducer = CreateThread(NULL, 0, &add_msg_to_queue, (LPVOID)q, 0, &ProducerID);
+    hConsumer = CreateThread(NULL, 0, &dequeue_message, (LPVOID)q, 0, &ConsumerID);
 
     if (hProducer)
         WaitForSingleObject(hProducer, INFINITE);

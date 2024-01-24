@@ -123,9 +123,6 @@ DWORD WINAPI worker_read(LPVOID param) {
 
             dataBuffer[iResult] = '\0';
 
-#ifdef DEBUG 
-            printf("[WORKER READ] Worker sent: %s.\n", dataBuffer);
-#endif
             if (strstr(dataBuffer + 1, ":exit") != NULL) {
                 printf("[WORKER READ] Worker sent exit. Worker proccess signing off.\n");
 
@@ -143,7 +140,6 @@ DWORD WINAPI worker_read(LPVOID param) {
             int a;
             sscanf(dataBuffer + 1, "Client->%[^:]:", clientName);
 
-            //printf("\nOVO --->   %s\n", clientName);
 
             char bufferForClient[BUFFER_SIZE];
             char temp[] = "";
@@ -164,9 +160,7 @@ DWORD WINAPI worker_read(LPVOID param) {
 
                 if (iResult != SOCKET_ERROR)	// Check if message is successfully received
                 {
-#ifdef DEBUG
-                    printf("[WORKER]: returned to client: %s\n", dataBuffer);
-#endif
+ 
                 }
                 else	// There was an error during recv
                 {
@@ -293,7 +287,7 @@ DWORD WINAPI worker_listener(LPVOID param) {
         return 1;
     }
 
-    printf("WORKER socket is set to listening mode. Waiting for new connection requests.\n");
+    printf("WORKER socket is set to listening mode...\n");
     static int worker_thread_cnt = 0;
 
     unsigned long nb_listen = 1;
@@ -314,7 +308,7 @@ DWORD WINAPI worker_listener(LPVOID param) {
         if (acceptedSocket != SOCKET_ERROR) {
             // Neblokirajuca operacija koja je uspesno izvrsena
 
-            printf("\n[WORKER THREAD]: New Worker accepted. Worker address: %s : %d\n", inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
+            printf("\nNew Worker accepted. Worker address: %s : %d\n", inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
 
             //create a new thread for a new client connected
             //create thread za workere prima ceo element liste ne samo accepted socket!!!

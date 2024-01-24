@@ -36,7 +36,7 @@ bool is_socket_ready(SOCKET socket, bool isRead) {
 		return true;
 }
 
-void create_new_worker_process() {
+void createWorker() {
     worker_node* new_worker = (worker_node*)malloc(sizeof(worker_node));
 
     memset(&new_worker->startup_info, 0, sizeof(STARTUPINFO));
@@ -74,7 +74,7 @@ void create_new_worker_process() {
 
 CRITICAL_SECTION globalCs;
 
-void shut_down_first_free_process() {
+void deleteFreeWorker() {
     node* first_elem = delete_first_node(free_workers_list);
 
     if (first_elem != NULL) {
@@ -104,12 +104,12 @@ DWORD WINAPI check_percentage(LPVOID param) {
         printf("Queue is at %d%%\n", fullfillness);
         if (fullfillness < 30 && worker_process_count>1) {
             //shut down worker threads
-            shut_down_first_free_process();
+            deleteFreeWorker();
 
         }
         else if (fullfillness > 70) {
             // open new worker processes
-            create_new_worker_process();
+            createWorker();
         }
     }
     return 0;

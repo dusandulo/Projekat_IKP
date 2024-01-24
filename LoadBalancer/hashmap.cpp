@@ -8,34 +8,39 @@
 static client_thread* hash_table_clt[MAX_ELEM];
 static CRITICAL_SECTION hashTableCS;
 
+
 unsigned int hash(char* name) {
-	int length = strnlen(name, CLIENT_NAME_LEN);
-	unsigned int hash_val = 0;
-	for (int i = 0; i < length; i++) {
-		hash_val += name[i];
-		hash_val = (hash_val * name[i]) % MAX_ELEM;
+	unsigned int hash_val = 5381; // Initial value
+	int c;
+
+	while ((c = *name++)) {
+		hash_val = ((hash_val << 5) + hash_val) + c; // hash * 33 + c
 	}
-	return hash_val;
+
+	return hash_val % MAX_ELEM;
 }
 
 void print_table() {
+	printf("---------------HASHTABLE---------------\n");
 
-	printf("==========HASHTABLE========\n");
 	for (int i = 0; i < MAX_ELEM; i++) {
 		if (hash_table_clt[i] == NULL) {
-			printf("\t%d\t----\n", i);
+			printf("Bucket %d: ----\n", i+1);
 		}
 		else {
-			printf("\t%d\t", i);
+			printf("Bucket %d: ", i+1);
 			client_thread* tmp = hash_table_clt[i];
 			while (tmp != NULL) {
-				printf("%s -> ", tmp->clientName);
+				printf("%s", tmp->clientName);
 				tmp = tmp->next;
+				if (tmp != NULL) {
+					printf(" -> ");
+				}
 			}
 			printf("\n");
 		}
 	}
-	printf("===========================\n");
+	printf("---------------------------------------\n");
 }
 
 bool init_hash_table() {
