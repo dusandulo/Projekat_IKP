@@ -82,6 +82,10 @@ void test_list() {
 
     Sleep(3000);
 
+    printf("Pre zauzimanja memorije");
+    getchar();
+
+
     init_list(&listSlobodni);
     init_list(&listZauzeti);
 
@@ -93,7 +97,9 @@ void test_list() {
     insert_last_node(busyWorker1, listZauzeti);
     insert_last_node(busyWorker2, listZauzeti);
 
-
+    printf("Zauzeta mem");
+    getchar();
+    getchar();
   
 
     printf("\nLista slobodnih: ");
@@ -115,6 +121,8 @@ void test_list() {
 
     printf("\nLista zauzetih nakon brisanja svih: ");
     print_list(listZauzeti);
+
+    printf("Oslobodjena mem");
 }
 
 void test_hashtable() {
@@ -126,6 +134,8 @@ void test_hashtable() {
     strcpy(cl5.clientName, "Client5");
     strcpy(cl6.clientName, "Client6");
 
+    printf("Pre zauzimanja mem");
+    getchar();
 
     init_hash_table();
 
@@ -160,9 +170,23 @@ DWORD WINAPI dequeue_message(LPVOID param) {
         Sleep(5000);
         dequeue(&dequeuedMessageStruct);
     }
+   
+
 }
 void test_messages() {
+    printf("Pre zauzimanja queue");
+    getchar();
+    getchar();
+
+
     create_queue(10);
+
+
+    printf("Nakon zauzimanja queue");
+    getchar();
+    getchar();
+
+
 
     HANDLE hProducer;
     HANDLE hConsumer;

@@ -48,7 +48,7 @@ int main() {
     //test_hashtable();
     //test_messages();
 
-
+    createWorker();
     printf("Press any key to exit:\n");
     char input[2];
     gets_s(input, 2);
